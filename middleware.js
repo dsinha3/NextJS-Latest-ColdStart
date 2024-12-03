@@ -1,6 +1,12 @@
 import { NextResponse } from "next/server";
 
+let isFirstInvocation = true;
+
 export async function middleware(request) {
+
+  const isColdStart = isFirstInvocation;
+  isFirstInvocation = false; // Set to false after the first invocation
+
   if (request.nextUrl.pathname === "/middleware-rewrite") {
     const { nextUrl: url } = request
     url.searchParams.set("rewritten", "true")
@@ -49,6 +55,7 @@ export async function middleware(request) {
   
     return NextResponse.rewrite(url);
   }
+  response.headers.set("isColdStart", isColdStart);
 }
 
 export const config = {
