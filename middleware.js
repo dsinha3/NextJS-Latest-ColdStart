@@ -23,7 +23,7 @@ export async function middleware(request) {
   if (request.nextUrl.pathname === "/middleware-set-header") {
     // Clone the request headers and set a new header `x-hello-from-middleware1`
     const requestHeaders = new Headers(request.headers);
-    requestHeaders.set("x-hello-from-middleware1", "hello");
+    requestHeaders.set("x-isColdStart", "hello");
   
     // You can also set request headers in NextResponse.rewrite
     const response = NextResponse.next({
@@ -34,7 +34,7 @@ export async function middleware(request) {
     });
   
     // Set a new response header `x-hello-from-middleware2`
-    response.headers.set("x-hello-from-middleware2", "hello");
+    response.headers.set("isColdStart", isColdStart.toString());
     return response;
   }
   if (request.nextUrl.pathname === "/middleware-fetch") {
@@ -55,21 +55,6 @@ export async function middleware(request) {
   
     return NextResponse.rewrite(url);
   }
-  // Clone the request headers and set a new header `x-hello-from-middleware1`
-  const requestHeaders = new Headers(request.headers);
-  requestHeaders.set("x-hello-from-middleware1", "hello");
-
-  // You can also set request headers in NextResponse.rewrite
-  const response = NextResponse.next({
-    request: {
-      // New request headers
-      headers: requestHeaders,
-    },
-  });
-
-  // Set a new response header `x-hello-from-middleware2`
-  response.headers.set("x-hello-from-middleware2", "hello");
-  return response;
 }
 
 export const config = {
