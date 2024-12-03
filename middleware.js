@@ -55,7 +55,13 @@ export async function middleware(request) {
   
     return NextResponse.rewrite(url);
   }
-  response.headers.set("isColdStart", isColdStart);
+  // Create a response or modify an existing one
+  const response = NextResponse.next();
+
+  // Add the cold start information to the headers
+  response.headers.set("isColdStart", isColdStart.toString());
+
+  return response;
 }
 
 export const config = {
