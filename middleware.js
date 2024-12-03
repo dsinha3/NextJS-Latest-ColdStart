@@ -55,15 +55,19 @@ export async function middleware(request) {
   
     return NextResponse.rewrite(url);
   }
+
+  const response = NextResponse.next();
+  response.headers.set("isColdStart", isColdStart.toString());
+  return response;
 }
 
-export const config = {
-  matcher: [
-    "/middleware-rewrite",
-    "/middleware-rewrite-with-isr",
-    "/middleware-redirect",
-    "/middleware-set-header",
-    "/middleware-fetch",
-    "/middleware-geolocation",
-  ],
-}
+// export const config = {
+//   matcher: [
+//     "/middleware-rewrite",
+//     "/middleware-rewrite-with-isr",
+//     "/middleware-redirect",
+//     "/middleware-set-header",
+//     "/middleware-fetch",
+//     "/middleware-geolocation",
+//   ],
+// }
